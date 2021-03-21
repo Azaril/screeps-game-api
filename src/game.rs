@@ -4,8 +4,6 @@
 //! generally means all state which is true this tick throughout the world.
 //!
 //! [Screeps documentation](http://docs.screeps.com/api/#Game)
-use std::collections::HashMap;
-
 use js_sys::{JsString, Object};
 
 use wasm_bindgen::prelude::*;
@@ -14,7 +12,6 @@ use wasm_bindgen::prelude::*;
 
 use crate::{
     local::{JsObjectId, ObjectId, RawObjectId},
-    ResourceType,
 };
 
 pub mod cpu;

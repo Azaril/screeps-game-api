@@ -1,3 +1,4 @@
+use crate::constants::ReturnCode;
 use js_sys::{JsString, Uint8Array};
 use wasm_bindgen::prelude::*;
 
@@ -33,5 +34,5 @@ extern "C" {
     ///
     /// [Screeps documentation](https://docs.screeps.com/api/#Room.Terrain.get)
     #[wasm_bindgen(method)]
-    pub fn get_raw_buffer_to_array(this: &RoomTerrain, destination: &Uint8Array) -> i8;
+    pub fn get_raw_buffer_to_array(this: &RoomTerrain, destination: &Uint8Array) -> ReturnCode;
 }

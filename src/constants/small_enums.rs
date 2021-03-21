@@ -3,15 +3,13 @@
 
 use enum_iterator::IntoEnumIterator;
 use num_derive::FromPrimitive;
+use num_traits::FromPrimitive;
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::fmt;
 use wasm_bindgen::prelude::*;
 // use parse_display::FromStr;
 use serde::{Deserialize, Serialize};
 
-// bindgen can't take an i8, needs custom boundary functions
-/// Translates return code constants.
-//#[wasm_bindgen]
 #[derive(
     Debug, PartialEq, Eq, Clone, Copy, Hash, FromPrimitive, Deserialize_repr, Serialize_repr,
 )]
@@ -34,21 +32,35 @@ pub enum ReturnCode {
     GclNotEnough = -15,
 }
 
-// impl ReturnCode {
-//     /// Turns this return code into a result.
-//     ///
-//     /// `ReturnCode::Ok` is turned into `Result::Ok`, all other codes are turned
-//     /// into `Result::Err(code)`
-//     #[inline]
-//     pub fn as_result(self) -> Result<(), Self> {
-//         match self {
-//             ReturnCode::Ok => Ok(()),
-//             other => Err(other),
-//         }
-//     }
-// }
+// Bindgen does not correctly handle i8 negative return values. Use custom return conversion.
+impl wasm_bindgen::convert::FromWasmAbi for ReturnCode {
+    type Abi = i32;
 
-// js_deserializable!(ReturnCode);
+    #[inline]
+    unsafe fn from_abi(js: i32) -> Self { 
+        Self::from_i32(js).unwrap()
+    }
+}
+
+impl wasm_bindgen::describe::WasmDescribe for ReturnCode {
+    fn describe() { 
+        wasm_bindgen::describe::inform(wasm_bindgen::describe::I32) 
+    }
+}
+
+impl ReturnCode {
+    /// Turns this return code into a result.
+    ///
+    /// `ReturnCode::Ok` is turned into `Result::Ok`, all other codes are turned
+    /// into `Result::Err(code)`
+    #[inline]
+    pub fn as_result(self) -> Result<(), Self> {
+        match self {
+            ReturnCode::Ok => Ok(()),
+            other => Err(other),
+        }
+    }
+}
 
 /// Translates `FIND_*` constants.
 #[wasm_bindgen]

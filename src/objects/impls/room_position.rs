@@ -1,9 +1,4 @@
-use crate::{
-    constants::{Color, Direction, Look, StructureType},
-    local::Position,
-    prelude::*,
-    prototypes::ROOM_POSITION_PROTOTYPE,
-};
+use crate::{ReturnCode, constants::{Color, Direction, Look, StructureType}, local::Position, prelude::*, prototypes::ROOM_POSITION_PROTOTYPE};
 use js_sys::{Array, JsString, Object};
 use wasm_bindgen::prelude::*;
 
@@ -80,7 +75,7 @@ extern "C" {
         this: &RoomPosition,
         ty: StructureType,
         name: Option<&JsString>,
-    ) -> i8;
+    ) -> ReturnCode;
 
     // todo we need to handle the fact that if this succeeds the name of the flag is returned, and maybe also the fact
     // that it'll throw a js exception when created in a non visible room.. hmm
@@ -95,7 +90,7 @@ extern "C" {
         name: Option<&JsString>,
         color: Option<Color>,
         secondary_color: Option<Color>,
-    ) -> i8;
+    ) -> ReturnCode;
 
     // todo FindOptions
     /// Find the closest object by path among an [`Array`] of objects, or among
