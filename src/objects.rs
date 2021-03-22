@@ -34,8 +34,10 @@ pub use self::impls::{
     StructureExtension, StructureExtractor, StructureFactory, StructureInvaderCore,
     StructureKeeperLair, StructureLab, StructureLink, StructureNuker, StructureObserver,
     StructurePortal, StructurePowerBank, StructurePowerSpawn, StructureRampart, StructureRoad,
-    StructureSpawn, StructureStorage, StructureTerminal, StructureTower, StructureWall, Tombstone,
+    StructureSpawn, StructureStorage, StructureTerminal, StructureTower, StructureWall, Tombstone
 };
+
+pub use self::impls::room_visual::*;
 
 #[cfg(feature = "enable-score")]
 pub use self::impls::{ScoreCollector, ScoreContainer};

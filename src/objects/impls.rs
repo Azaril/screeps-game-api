@@ -12,7 +12,7 @@ mod room;
 mod room_object;
 mod room_position;
 mod room_terrain;
-// mod room_visual;
+pub mod room_visual;
 mod ruin;
 mod source;
 mod store;
